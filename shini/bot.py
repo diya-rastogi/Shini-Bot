@@ -88,7 +88,7 @@ async def change_presence():
         await bot.change_presence(activity=discord.Game(status))
         await asyncio.sleep(15)
 
-for cog in os.listdir(".\\cogs"):
+for cog in os.listdir("./cogs"):
     if cog.endswith(".py") and not cog.startswith("_"):
         try:
             cog = f"cogs.{cog.replace('.py', '')}"
