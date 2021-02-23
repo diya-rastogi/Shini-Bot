@@ -18,6 +18,10 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.ext.commands import Cog
 from discord.ext.commands import command, has_permissions
+from dotenv import load_dotenv
+
+load_dotenv()
+TOKEN = os.getenv('SHINI_BOT')
 
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix=">", help_command=None, intents=intents)
@@ -95,4 +99,4 @@ for cog in os.listdir(".\\cogs"):
 
 
 bot.loop.create_task(change_presence())
-bot.run("NzM0MjkzNDI1NTk1MjE5OTcw.XxPmCw.JSYxkX_jFyDpldCbtGsNf3vrJME")
+bot.run(TOKEN, bot=True)
