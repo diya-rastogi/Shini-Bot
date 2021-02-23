@@ -1,1 +1,1 @@
-worker: python bot/bot.py
+worker: shini_bot/bot.py
