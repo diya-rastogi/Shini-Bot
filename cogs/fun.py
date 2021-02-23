@@ -24,7 +24,8 @@ class Fun(commands.Cog):
             ", yes!",
             ", nO. :relieved:",
             ", uwu!",
-            ", leo best boy <3"
+            ", leo best boy <3",
+            ", rax bess :kiss:"
         ]
         for x in message.mentions:
             if(x == self.bot.user):
