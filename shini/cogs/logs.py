@@ -28,15 +28,13 @@ class Logs(commands.Cog):
             snipe_message_id = None
 
     @commands.command()
-    async def snipe(self, message):
+    async def snipe(self, message: commands.clean_content):
+
         if snipe_message_content==None:
-            await message.channel.send("Theres nothing to snipe.")
+            await message.channel.send("There's nothing to snipe.")
+            return
         else:
-            embed = discord.Embed(color=65280, description=f"{snipe_message_content}")
-            embed.set_author(name= f"<@{snipe_message_author}>")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/795346887955709982.png?v=1")
-            await message.channel.send(embed=embed)
-            await message.delete()
+            await message.channel.send(f"<@{snipe_message_author.id}> said: `{snipe_message_content}`")
             return
 
 def setup(bot):

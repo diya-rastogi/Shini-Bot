@@ -27,9 +27,14 @@ class Fun(commands.Cog):
             ", leo best boy <3",
             ", rax bess :kiss:"
         ]
-        for x in message.mentions:
-            if(x == self.bot.user):
-                await message.channel.send(f"{message.author.mention}{random.choice(responses)}")
+        if not message.content.startswith(">"):
+            for x in message.mentions:
+                if(x == self.bot.user):
+                    await message.channel.send(f"{message.author.mention}{random.choice(responses)}")
+        word = "neel"
+        if word in message.content.lower():
+            await message.delete()
+            await message.channel.send("No.")
 
     @commands.command()
     async def say(self, ctx, *, arg: commands.clean_content):
@@ -37,17 +42,60 @@ class Fun(commands.Cog):
             if(x == self.bot.user):
                 await ctx.message.delete()
                 await ctx.send("Please don't try to break me.")
-        else:
+                return
+                
+        await ctx.message.delete()
+        await ctx.send(arg)
+    
+    @commands.command()
+    async def slap(self, ctx, *, member:discord.Member = None):
+        if member is None:
             await ctx.message.delete()
-            await ctx.send(arg)
+            await ctx.send(f"{ctx.author.mention}, who do I slap, your mom?")  
+            return
+
+        if member.id == self.bot.user.id:
+            await ctx.message.delete()
+            await ctx.send("Please don't try to break me.")
+            return
+
+        if isinstance(ctx.channel, discord.DMChannel):
+            return
+
+        responses = [
+            "...grabs a gold block and flings it at {}'s face.",
+            "...picks up a laptop and hits {} with it.",
+            "...sent {} to /dev/null.",
+            "...hurls a piece of rotten meat at {}.",
+            "...threw {} off a building.",
+            "...made {} a knuckle sandwich.",
+            "...hurls a printer at {}.",
+            "...whacks {} on the butt with a gold block.",
+            "...grabs up a mau5head and slaps {} with it.",
+            "...replaced all of {}'s music with Nickelback.",
+            "...smacks {} around a bit with a baseball bat.",
+            "...slaps {} in the chest with a lava bucket.",
+            "...whacks {} in the face with a physics textbook.",
+            "...sits on {}'s face while slamming a pair of trousers on the crotch",
+            "...prods {} with an old television."
+        ]
+        mem = member.mention
+        await ctx.message.delete()
+        await ctx.send(f"{random.choice(responses).format(mem)}")
 
     @commands.command()
     async def islam(self, ctx):
         embed = discord.Embed(title="LAHAULA VILA QUWAT ILLA BILLA", description="```لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ ٱلْعَلِيِّ ٱلْعَظِيمِ‎```")
-        embed.set_thumbnail(url="https://www.allahsword.com /images/la-hawla-wala-quwwata-illa-billah@2x.png")
+        embed.set_thumbnail(url="https://www.allahsword.com/images/la-hawla-wala-quwwata-illa-billah%402x.png")
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def hindu(self, ctx):
+        embed = discord.Embed(title="JAI BHOLENATH", description="```ऊं भूर्भुव: स्व: तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि। धियो यो न: प्रचोदयात्।।```")
+        embed.set_image(url="https://tfipost.com/wp-content/uploads/2019/05/MODI-2.png")
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def gif(self, ctx, *, giftag, member:discord.Member=None):
@@ -97,7 +145,7 @@ class Fun(commands.Cog):
         await ctx.channel.send(embed=ban)
 
     @commands.command(aliases=["8ball", "crystalball"])
-    async def eightball(self, ctx, *, question: commands.clean_content):
+    async def eightball(self, ctx, *, question: commands.clean_content=None):
         answers = [
             "As I see it,- yes.",
             "Ask again later.",
@@ -120,10 +168,12 @@ class Fun(commands.Cog):
             "Yes, definitely.",
             "You may rely on it."
             ]
-        if len(question)==0:
-            await ctx.send(f"Type a question, will you? Ugh.")
-        elif len(question)!=0:
+
+        if question==None:
+            await ctx.send("That does not look like a question to me.")
+        else:
             await ctx.send(f"Question: {question}\nAnswer: {random.choice(answers)}")
+
 
     global TDS
     TDS=[]
