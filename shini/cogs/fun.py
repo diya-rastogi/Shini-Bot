@@ -5,6 +5,7 @@ import requests
 import logging
 import urllib.request
 import TenGiphPy
+from PIL import Image, ImageDraw, ImageFilter
 from requests import get
 from discord.ext import commands   
 
@@ -29,12 +30,21 @@ class Fun(commands.Cog):
         ]
         if not message.content.startswith(">"):
             for x in message.mentions:
+                if (message.author == self.bot.user):
+                    return
                 if(x == self.bot.user):
                     await message.channel.send(f"{message.author.mention}{random.choice(responses)}")
         word = "neel"
         if word in message.content.lower():
+            arg = message.content.lower()
+            hmm = arg.replace("neel", "n*el")
             await message.delete()
-            await message.channel.send("No.")
+            await message.channel.send(f"{message.author.mention}, you should have written: `{hmm}`")
+        word2 = "cba"
+        if message.author.id == 289379965101932544:
+            if word2 in message.content.lower():
+                await message.delete()
+                await message.channel.send("chup reh randi")
 
     @commands.command()
     async def say(self, ctx, *, arg: commands.clean_content):
@@ -253,6 +263,8 @@ class Fun(commands.Cog):
         try:
             definition = result["list"][0]["definition"]
             example = result["list"][0]["example"]
+            if example == None:
+                example = "No example found!"
             link = result["list"][0]["permalink"]
             urban=discord.Embed(title=f'{word}',url=f'{link}')
             urban.add_field(name="Description", value=f"```{definition}```", inline=False)
@@ -262,6 +274,20 @@ class Fun(commands.Cog):
             
         except:
             await ctx.send("Not found!")
+
+    @commands.command()
+    async def tomato(self, ctx, *, member: discord.Member = None):
+        if member is None:
+            member = ctx.author    
+        if isinstance(ctx.channel, discord.DMChannel):
+            return
+
+        im1 = Image.open(f"{member.avatar_url}")
+        im2 = Image.open(".\\splat.png")
+        back_im = im1.copy()
+        back_im.paste(im2, (400, 100)) 
+        await ctx.send(back_im)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

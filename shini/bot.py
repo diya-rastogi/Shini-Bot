@@ -53,7 +53,7 @@ async def reload(ctx, *, cog=None):
                             name = f"Couldn't reload {ext}",
                             value = e,
                             inline=False
-                        )
+                         )
                     await asyncio.sleep(0.5)
             cogsreload = await ctx.send(embed=reloadingcog)
             await asyncio.sleep(5)
