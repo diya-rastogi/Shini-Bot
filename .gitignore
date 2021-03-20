@@ -5,3 +5,5 @@ instance_manager.py
 .vscode
 .env
 splat.png
+keep_alive.py
+runtime.txt
